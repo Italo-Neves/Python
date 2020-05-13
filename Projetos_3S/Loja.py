@@ -151,10 +151,9 @@ class Cliente(Pessoa):
 
 #Venda---------------------------------------------------------------------------------------------------
 class Venda:
-    def __init__(self, data, hora, produto, cliente, vendedor):
+    def __init__(self, data, hora,  cliente, vendedor):
         self.__data = data
         self.__hora = hora
-        self.__produto = produto
         self.__cliente = cliente
         self.__vendedor = vendedor
 
@@ -175,14 +174,6 @@ class Venda:
         self.__hora = hora
 
     @property
-    def produto(self):
-        return self.__produto
-
-    @produto.setter
-    def produto(self, produto):
-        self.__produto = produto
-
-    @property
     def cliente(self):
         return self.__cliente
 
@@ -198,19 +189,45 @@ class Venda:
     def vendedor(self, vendedor):
         self.__vendedor = vendedor
 
-    def add(self,p):
-       pass
+    def carrinho_compras(self,estoque):
+        carrinho = []
+        produto = []
+        c_preco = []#contador de precos
+        s_preco = 0
+        while produto != 'sair':
+            print("Adicione um produto no carrinho ou digite 'sair para sair:'")
+            produto = input()
+            if produto != 'sair':
+                if produto == 'p1':
+                    carrinho.append(p1.__dict__)
+                    c_preco.append(p1.__dict__['_Produto__preco'])
+                if produto == 'p2':
+                    carrinho.append(p2.__dict__)
+                    c_preco.append(p2.__dict__['_Produto__preco'])
+                if produto == 'p3':
+                    carrinho.append(p3.__dict__)
+                    c_preco.append(p3.__dict__['_Produto__preco'])
+                if produto == 'p4':
+                    carrinho.append(p4.__dict__)
+                    c_preco.append(p4.__dict__['_Produto__preco'])
+                if produto == 'p5':
+                    carrinho.append(p5.__dict__)
+                    c_preco.append(p6.__dict__['_Produto__preco'])
+                if produto == 'p6':
+                    carrinho.append(p6.__dict__)
+                    c_preco.append(p6.__dict__['_Produto__preco'])
 
-    def nota_fiscal(self):
-
-        print(f'----------------Auto Mecanica Simas Turbo-----------------'
+        print(f'----------------Eletronica Simas Turbo--------------------'
               f'\nData:{self.data} Hora:{self.hora}'
               f'\n--------------------------------------------------------'
               f'\nCliente:{self.cliente}'
-              f'\n--------------------------------------------------------'
-              f'\nProduto:{self.produto}'
-              f'\n--------------------------------------------------------'
-              f'\nTotal:'
+              f'\n--------------------------------------------------------')
+        for produto in carrinho:
+             print( f'\n Produto: {len(carrinho)}:{produto.values()}')
+        for p in c_preco:
+            s_preco += p
+        print(f'\n--------------------------------------------------------'
+              f'\nTotal:{s_preco}'
               f'\n--------------------------------------------------------')
 
 #----------------------------------------------Produto---------------------------------------------------------------------------------------------------
@@ -318,6 +335,7 @@ def cadastra_produto():
     p = Produto(nome, preco, codigo, descricao, pcusto, imposto)
     print(f'O produto {p.nome} foi cadastrado com sucesso!')
     print(p.__dict__)
+    return p
 
 def altera_produto(c):
     print('O que deseja alterar?'
@@ -346,7 +364,6 @@ def altera_produto(c):
     if op == '6':
        nimposto = (input('Digite a nova porcentagem de impostos'))
        c.imposto = nimposto
-
 
 def cadastra_usuario():
     su = input('\n 1 - Gerente'
@@ -391,7 +408,12 @@ def cadastra_usuario():
         print('opção invalida!')
 
 def realiza_venda():
-    pass
+    data = input('Nome do produto: ')
+    hora = int(input('Valor do produto: '))
+    produto = int(input('Código de barras: '))
+    cliente = input('Descrição do produto: ')
+    vendedor = int(input('valor de fabrica: '))
+
 
 def cadastra_cliente():
     nome = input('Informe o nome: ')
@@ -434,40 +456,20 @@ def visualiza_cliente(user):
 
 if __name__ == '__main__':
 #----------------------------------------------Produtos-------------------------------------------------------
-   p1 = Produto('Mousepad', 10.99, 789456123, 'Mouse pad com apoio para a mão', 2.49, 1)
-   p2 = Produto('Teclado', 299.99, 789455853, 'Teclado mecanico ', 2.49, 2)
-   p3 = Produto('Mouse', 89.99, 789452153, 'Mouse optico sem fio', 2.49, 3)
-   p4 = Produto('Monitor', 499.99, 789485223, 'Monitor asus 1400X900', 2.49, 1)
-   p5 = Produto('Gabinete', 199.99, 789466743, 'gabinete grande', 2.49, 1)
-   p6 = Produto('Microfone', 59.99, 789459633, 'Microfone de mesa', 2.49, 2)
+   p1 = Produto('Mousepad', 7891099, 10.99, 'Mouse pad com apoio para a mão', 2.49, 1)
+   p2 = Produto('Teclado', 78929999, 299.99, 'Teclado mecanico ', 2.49, 2)
+   p3 = Produto('Mouse', 7898999, 89.99, 'Mouse optico sem fio', 2.49, 3)
+   p4 = Produto('Monitor', 789499.99, 499.99, 'Monitor asus 1400X900', 2.49, 1)
+   p5 = Produto('Gabinete', 78919999, 199.99, 'gabinete grande', 2.49, 1)
+   p6 = Produto('Microfone', 7895999, 59.99, 'Microfone de mesa', 2.49, 2)
 #---------------------------------------------Usuarios---------------------------------------------------------
    #g1 = Gerente('Italo','Vinicius','cefe@gmail.com','12345678945','123456','Vendedor',0)
    f1 = Funcionario('João','Batista','jao@gmail.com','65478932145','789456',1,0)
 #---------------------------------------------Cliente----------------------------------------------------------
    c1 = Cliente('Juliana','Pereira','ju@gmail.com','45696325814',0)
 #--------------------------------------------------------------------------------------------------------------
-   v1 = Venda('20/05/2020','13:50','',c1,f1)
+   v1 = Venda('20/05/2020','13:50',c1.__dict__['_Pessoa__nome'],c1,f1)
    estoque = [p1,p2,p3,p4,p5,p6]
+   v1.carrinho_compras(estoque)
 
-   carrinho = []
-   produto = []
-
-   while produto != 'sair':
-        print("Adicione um produto no carrinho ou digite 'sair para sair:'")
-        produto = input()
-        if produto != 'sair':
-            if produto =='p1':
-                carrinho.append(p1.__dict__)
-            if produto =='p2':
-                carrinho.append(p2.__dict__)
-            if produto =='p3':
-                carrinho.append(p3.__dict__)
-            if produto =='p4':
-                carrinho.append(p4.__dict__)
-            if produto =='p5':
-                carrinho.append(p5.__dict__)
-            if produto =='p6':
-                carrinho.append(p6.__dict__)
-   for produto in carrinho:
-        print(produto)
 
