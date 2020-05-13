@@ -132,7 +132,7 @@ class Gerente(Usuario):
         pass
 
 #Cliente---------------------------------------------------------------------------------------------------
-class Clinete(Pessoa):
+class Cliente(Pessoa):
     def __init__(self, nome, sobrenome, email, cpf,compra):
         super().__init__(nome, sobrenome ,email, cpf)
         self.__compra = compra
@@ -198,7 +198,11 @@ class Venda:
     def vendedor(self, vendedor):
         self.__vendedor = vendedor
 
+    def add(self,p):
+       pass
+
     def nota_fiscal(self):
+
         print(f'----------------Auto Mecanica Simas Turbo-----------------'
               f'\nData:{self.data} Hora:{self.hora}'
               f'\n--------------------------------------------------------'
@@ -278,6 +282,9 @@ class Produto:
         desc = (preco * vdesc/100) - preco
         return f'O deconto foi de {desc}'
 
+
+
+
     def mostra_produto(self):
         print(f'\n Nome:{self.nome}'
               f'\n Código:{self.codigo}'
@@ -285,7 +292,7 @@ class Produto:
               f'\n Descrição:{self.descricao}'
               f'\n Preço de custo:{self.pcusto}'
               f'\n Porcentagem de impostos:{self.imposto}%')
-#------------------------------------------------Funções----------------------------------------------------------------------
+#------------------------------------------------CRUD----------------------------------------------------------------------
 def menu():
     print(f'O deseja fazer?'
         f'\n 1 - Cadastrar produto'
@@ -324,19 +331,19 @@ def altera_produto(c):
     if op == '1':
        nnome = (input('Digite o novo nome'))
        c.nome = nnome
-    elif op == '2':
+    if op == '2':
        ncodigo = (input('Digite o preço'))
        c.codigo = ncodigo
-    elif op == '3':
+    if op == '3':
        npreco = (input('Digite o codigo de barras'))
        c.preco = npreco
-    elif op == '4':
+    if op == '4':
        ndescricao = (input('Digite a nova descrição'))
        c.descricao = ndescricao
-    elif op == '5':
+    if op == '5':
        npcusto = (input('Digite o novo preço de fabrica'))
        c.pcusto = npcusto
-    elif op == '6':
+    if op == '6':
        nimposto = (input('Digite a nova porcentagem de impostos'))
        c.imposto = nimposto
 
@@ -392,7 +399,7 @@ def cadastra_cliente():
     email = input('Informe o email: ')
     cpf = input('Informe o cpf: ')
     compra = 0
-    c = Clinete(nome,sobrnome, email, cpf, compra)
+    c = Cliente(nome,sobrnome, email, cpf, compra)
     print(f'Usuario {c.nome_comleto()} Criado com sucesso!')
     print(c.__dict__)
 
@@ -406,13 +413,13 @@ def altera_cliente(c):
     if op == '1':
        nnome = (input('Digite o novo nome'))
        c.nome = nnome
-    elif op == '2':
+    if op == '2':
        nsobrenome = (input('Digite o novo nome'))
        c.sobrenome = nsobrenome
-    elif op == '3':
+    if op == '3':
        nemail = (input('Digite o novo nome'))
        c.email = nemail
-    elif op == '4':
+    if op == '4':
        ncpf = (input('Digite o novo nome'))
        c.cpf = ncpf
 
@@ -423,20 +430,44 @@ def visualiza_produto(produto):
     Produto.mostra_produto(produto)
 
 def visualiza_cliente(user):
-    Clinete.mostra_cliente(user)
+    Cliente.mostra_cliente(user)
 
 if __name__ == '__main__':
 #----------------------------------------------Produtos-------------------------------------------------------
-   p1 = Produto('Mousepad', 4.99, 789456123, 'Mouse pad com apoio para a mão', 2.49, 1)
-   p2 = Produto('Tclado', 4.99, 789455853, 'Teclado mecanico ', 2.49, 2)
-   p3 = Produto('Mouse', 4.99, 789452153, 'Mouse optico sem fio', 2.49, 3)
-   p4 = Produto('Monitor', 4.99, 789485223, 'Monitor asus 1400X900', 2.49, 1)
-   p5 = Produto('Gabinete', 4.99, 789466743, 'gabinete grande', 2.49, 1)
-   p6 = Produto('Microfone', 4.99, 789459633, 'Microfone de mesa', 2.49, 2)
+   p1 = Produto('Mousepad', 10.99, 789456123, 'Mouse pad com apoio para a mão', 2.49, 1)
+   p2 = Produto('Teclado', 299.99, 789455853, 'Teclado mecanico ', 2.49, 2)
+   p3 = Produto('Mouse', 89.99, 789452153, 'Mouse optico sem fio', 2.49, 3)
+   p4 = Produto('Monitor', 499.99, 789485223, 'Monitor asus 1400X900', 2.49, 1)
+   p5 = Produto('Gabinete', 199.99, 789466743, 'gabinete grande', 2.49, 1)
+   p6 = Produto('Microfone', 59.99, 789459633, 'Microfone de mesa', 2.49, 2)
 #---------------------------------------------Usuarios---------------------------------------------------------
    #g1 = Gerente('Italo','Vinicius','cefe@gmail.com','12345678945','123456','Vendedor',0)
-   #f1 = Funcionario('João','Batista','jao@gmail.com','65478932145','789456',1,0)
+   f1 = Funcionario('João','Batista','jao@gmail.com','65478932145','789456',1,0)
 #---------------------------------------------Cliente----------------------------------------------------------
-   c1 = Clinete('Juliana','Pereira','ju@gmail.com','45696325814',0)
+   c1 = Cliente('Juliana','Pereira','ju@gmail.com','45696325814',0)
 #--------------------------------------------------------------------------------------------------------------
+   v1 = Venda('20/05/2020','13:50','',c1,f1)
+   estoque = [p1,p2,p3,p4,p5,p6]
+
+   carrinho = []
+   produto = []
+
+   while produto != 'sair':
+        print("Adicione um produto no carrinho ou digite 'sair para sair:'")
+        produto = input()
+        if produto != 'sair':
+            if produto =='p1':
+                carrinho.append(p1.__dict__)
+            if produto =='p2':
+                carrinho.append(p2.__dict__)
+            if produto =='p3':
+                carrinho.append(p3.__dict__)
+            if produto =='p4':
+                carrinho.append(p4.__dict__)
+            if produto =='p5':
+                carrinho.append(p5.__dict__)
+            if produto =='p6':
+                carrinho.append(p6.__dict__)
+   for produto in carrinho:
+        print(produto)
 
