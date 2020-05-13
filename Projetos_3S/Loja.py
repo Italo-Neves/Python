@@ -383,6 +383,7 @@ def cadastra_usuario():
             user = Gerente(nome,sobrnome,email, cpf, senha, setor, venda)
             print(f'Usuario {user.nome_comleto()} criado com sucesso!')
             print(user.__dict__)
+            return user
          else:
             print('Senha não confere...')
             exit(42)
@@ -402,9 +403,11 @@ def cadastra_usuario():
                 user = Gerente(nome, sobrnome, email, cpf, senha, cargo, venda)
                 print(f'Usuario {user.nome_comleto()} criado com sucesso!')
                 print(user.__dict__)
+                return user
             else:
                 print('Senha não confere...')
                 exit(42)
+
     else:
         print('opção invalida!')
 
@@ -457,6 +460,24 @@ def visualiza_produto(produto):
 def visualiza_cliente(user):
     Cliente.mostra_cliente(user)
 
+def delete_usuario(func):
+    f = input('Qual qual Funcionario será deletado?')
+    if f in func:
+        func.pop(f)
+        print(f'Funcionario deletado!')
+
+def delete_cliente(c_cadastrados):
+    c = input('Qual qual cliente será deletado?')
+    if c in c_cadastrados:
+        c_cadastrados.pop(c)
+        print(f'Produto deletado!')
+
+def delete_produto(estoque):
+    item = input('Qual qual produto será deletado?')
+    if item in estoque:
+        estoque.pop(item)
+        print(f'Produto deletado!')
+
 
 if __name__ == '__main__':
 #----------------------------------------------Produtos-------------------------------------------------------
@@ -467,7 +488,7 @@ if __name__ == '__main__':
    p5 = Produto('Gabinete', 78919999, 199.99, 'gabinete grande', 2.49, 1)
    p6 = Produto('Microfone', 7895999, 59.99, 'Microfone de mesa', 2.49, 2)
 #---------------------------------------------Usuarios---------------------------------------------------------
-   #g1 = Gerente('Italo','Vinicius','cefe@gmail.com','12345678945','123456','Vendedor',0)
+   g1 = Gerente('Italo','Vinicius','cefe@gmail.com','12345678945','123456','Vendedor',0)
    f1 = Funcionario('João','Batista','jao@gmail.com','65478932145','789456',1,0)
 #---------------------------------------------Clientes----------------------------------------------------------
    c1 = Cliente('Juliana','Pereira','ju@gmail.com','45696325814',0)
@@ -475,5 +496,79 @@ if __name__ == '__main__':
    v1 = Venda('20/05/2020','13:50',c1.__dict__['_Pessoa__nome'],f1)
 #--------------------------------------------------------------------------------------------------------
    estoque = [p1,p2,p3,p4,p5,p6]
+   func = [f1,g1]
+   c_cadastrados =[c1]
+   r = menu()
+#-------------------------------------------------------Menu--------------------------------------------------------
+   if r =='1':
+       estoque.append(cadastra_produto())
+
+#------------------------------------------------------------------------------------------------------
+   if r =='2':
+       func.append(cadastra_usuario())
+#------------------------------------------------------------------------------------------------------
+   elif r == '3':
+       c_cadastrados.append(cadastra_cliente())
+#------------------------------------------------------------------------------------------------------
+   elif r == '4':
+       opp = input('Qual produto deseja alterar?')
+       if opp in estoque:
+            altera_produto(opp)
+       else:
+           print('Produto não encontrado!!')
+#------------------------------------------------------------------------------------------------------
+   elif r == '5':
+       opau = input('Qual usuario deseja alterar?')
+       if opau in func:
+           print('Erro 400')
+       else:
+           print('usuario não encontrado!!')
+           exit(menu())
+#------------------------------------------------------------------------------------------------------
+   elif r == '6':
+       opac = input('Qual cliente deseja alterar?')
+       if opac in estoque:
+           altera_cliente(opac)
+       else:
+           print('ciente não cadastrado!!')
+#------------------------------------------------------------------------------------------------------
+   elif r == '7':
+       opvp1 = input('\n [1]-Mostrar produto especifico'
+                     '\n [2]-Mostrar Todos os produtos')
+       if opvp1 == '1':
+           opvp2 = input('Qual produto deseja visualizar?')
+           if opvp2 in estoque:
+                altera_cliente(opvp2)
+           else:
+                print('produto não cadastrado!!')
+       if opvp1 == '2':
+           for p in estoque:
+               print(p.__dict__)
+#------------------------------------------------------------------------------------------------------
+   elif r == '8':
+       opvp1 = input('\n [1]-Mostrar usuario especifico'
+                     '\n [2]-Mostrar Todos os usuarios')
+       if opvp1 == '1':
+           opvp2 = input('Qual usuario deseja visualizar?')
+           if opvp2 in estoque:
+                visualiza_usuario(opvp2)
+           else:
+                print('usuario não cadastrado!!')
+       if opvp1 == '2':
+           for u in func:
+               print(u.__dict__)
+#------------------------------------------------------------------------------------------------------
+   elif r == '9':
+       opvc1 = input('\n [1]-Mostrar cliente especifico'
+                     '\n [2]-Mostrar Todos os cliente')
+       if opvc1 == '1':
+           opvc2 = input('Qual cliente deseja visualizar?')
+           if opvc2 in c_cadastrados:
+               visualiza_cliente(opvc2)
+           else:
+               print('ciente não cadastrado!!')
+       if opvc1 == '2':
+           for c in c_cadastrados:
+               print(c.__dict__)
 
 
