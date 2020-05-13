@@ -148,7 +148,6 @@ class Cliente(Pessoa):
               f'\n Email:{self.email}'
               f'\n Compra:{self.compra}')
 
-
 #Venda---------------------------------------------------------------------------------------------------
 class Venda:
     def __init__(self, data, hora,  cliente, vendedor):
@@ -408,12 +407,14 @@ def cadastra_usuario():
         print('opção invalida!')
 
 def realiza_venda():
-    data = input('Nome do produto: ')
-    hora = int(input('Valor do produto: '))
-    produto = int(input('Código de barras: '))
-    cliente = input('Descrição do produto: ')
-    vendedor = int(input('valor de fabrica: '))
+    data = input('digite a data: ')
+    hora = int(input('horario: '))
+    cliente = input('cliente: ')
+    vendedor = int(input('vendedor: '))
 
+    venda = Venda(data,hora,cliente,vendedor)
+    print(f'Venda iniciada!')
+    print(venda.__dict__)
 
 def cadastra_cliente():
     nome = input('Informe o nome: ')
@@ -468,7 +469,7 @@ if __name__ == '__main__':
 #---------------------------------------------Cliente----------------------------------------------------------
    c1 = Cliente('Juliana','Pereira','ju@gmail.com','45696325814',0)
 #--------------------------------------------------------------------------------------------------------------
-   v1 = Venda('20/05/2020','13:50',c1.__dict__['_Pessoa__nome'],c1,f1)
+   v1 = Venda('20/05/2020','13:50',c1.__dict__['_Pessoa__nome'],f1)
    estoque = [p1,p2,p3,p4,p5,p6]
    v1.carrinho_compras(estoque)
 
