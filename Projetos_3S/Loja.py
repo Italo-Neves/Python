@@ -1,4 +1,9 @@
 from passlib.hash import pbkdf2_sha256 as cryp #importando o necessario para criptografia char256
+"""
+Simas precisa de um sistema de controle de caixa para a sua loja de eletronicos
+
+"""
+
 #-----------------------------------------Pessoa---------------------------------------------------------------------------------------------------
 class Pessoa:
     def __init__(self, nome, sobrenome, email,cpf):
