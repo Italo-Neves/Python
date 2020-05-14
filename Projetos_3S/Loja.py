@@ -502,123 +502,98 @@ if __name__ == '__main__':
    func = [f1,g1]
    c_cadastrados =[c1]
 #-------------------------------------------------------Menu--------------------------------------------------------
-
-   r = menu()
-   if r =='1':
-       estoque.append(cadastra_produto())
-       exit()
+   while True:
+       r = menu()
+       if r =='1':
+           estoque.append(cadastra_produto())
 #------------------------------------------------------------------------------------------------------
-   if r =='2':
-       func.append(cadastra_usuario())
-       exit()
+       if r =='2':
+           func.append(cadastra_usuario())
 #------------------------------------------------------------------------------------------------------
-   elif r == '3':
-       c_cadastrados.append(cadastra_cliente())
-       exit()
+       elif r == '3':
+           c_cadastrados.append(cadastra_cliente())
 #------------------------------------------------------------------------------------------------------
-   elif r == '4':
-       opp = input('Qual produto deseja alterar?')
-       if opp in estoque:
-            altera_produto(opp)
-       else:
-           opp = input('Produto não cadastrado, deseja cadastra-lo?').upper()
-           if opp == 'S':
-               cadastra_produto()
-               exit()
-           else:
-               exit()
-#------------------------------------------------------------------------------------------------------
-   elif r == '5':
-       opau = input('Qual usuario deseja alterar?')
-       if opau in func:
-           print('Erro 400')
-       else:
-           opu = input('Usuario não cadastrado, deseja cadastra-lo?').upper()
-           if opu == 'S':
-               cadastra_usuario()
-               exit()
-           else:
-               exit()
-#------------------------------------------------------------------------------------------------------
-   elif r == '6':
-       opac = input('Qual cliente deseja alterar?')
-       if opac in estoque:
-           altera_cliente(opac)
-           exit()
-       else:
-           opc =input('cliente não cadastrado, deseja cadastra-lo?').upper()
-           if opc == 'S':
-               cadastra_cliente()
-               exit()
-           else:
-               exit()
-#------------------------------------------------------------------------------------------------------
-   elif r == '7':
-       opvp1 = input('\n [1]-Mostrar produto especifico'
-                     '\n [2]-Mostrar Todos os produtos')
-       if opvp1 == '1':
-           opvp2 = input('Qual produto deseja visualizar?')
-           if opvp2 in estoque:
-                altera_cliente(opvp2)
-                exit()
+       elif r == '4':
+           opp = input('Qual produto deseja alterar?')
+           if opp in estoque:
+                altera_produto(opp)
            else:
                opp = input('Produto não cadastrado, deseja cadastra-lo?').upper()
                if opp == 'S':
                    cadastra_produto()
-                   exit()
-               else:
-                   exit()
-       if opvp1 == '2':
-           for p in estoque:
-               print(p.__dict__)
-           exit()
 #------------------------------------------------------------------------------------------------------
-   elif r == '8':
-       opvp1 = input('\n [1]-Mostrar usuario especifico'
-                     '\n [2]-Mostrar Todos os usuarios')
-       if opvp1 == '1':
-           opvp2 = input('Qual usuario deseja visualizar?')
-           if opvp2 in estoque:
-                visualiza_usuario(opvp2)
-                exit()
+       elif r == '5':
+           opau = input('Qual usuario deseja alterar?')
+           if opau in func:
+               print('Erro 400')
            else:
                opu = input('Usuario não cadastrado, deseja cadastra-lo?').upper()
                if opu == 'S':
                    cadastra_usuario()
-                   exit()
-               else:
-                   exit()
-       if opvp1 == '2':
-           for u in func:
-               print(u.__dict__)
-           exit()
 #------------------------------------------------------------------------------------------------------
-   elif r == '9':
-       opvc1 = input('\n [1]-Mostrar cliente especifico'
-                     '\n [2]-Mostrar Todos os cliente')
-       if opvc1 == '1':
-           opvc2 = input('Qual cliente deseja visualizar?')
-           if opvc2 in c_cadastrados:
-               visualiza_cliente(opvc2)
-               exit()
+       elif r == '6':
+           opac = input('Qual cliente deseja alterar?')
+           if opac in estoque:
+               altera_cliente(opac)
            else:
-               opc = input('cliente não cadastrado, deseja cadastra-lo?').upper()
+               opc =input('cliente não cadastrado, deseja cadastra-lo?').upper()
                if opc == 'S':
                    cadastra_cliente()
-                   exit()
+#------------------------------------------------------------------------------------------------------
+       elif r == '7':
+           opvp1 = input('\n [1]-Mostrar produto especifico'
+                         '\n [2]-Mostrar Todos os produtos')
+           if opvp1 == '1':
+               opvp2 = input('Qual produto deseja visualizar?')
+               if opvp2 in estoque:
+                    altera_cliente(opvp2)
                else:
-                   exit()
-       if opvc1 == '2':
-           for c in c_cadastrados:
-               print(c.__dict__)
-               exit()
+                   opp = input('Produto não cadastrado, deseja cadastra-lo?').upper()
+                   if opp == 'S':
+                       cadastra_produto()
+           if opvp1 == '2':
+               for p in estoque:
+                   print(p.__dict__)
+#------------------------------------------------------------------------------------------------------
+       elif r == '8':
+           opvp1 = input('\n [1]-Mostrar usuario especifico'
+                         '\n [2]-Mostrar Todos os usuarios')
+           if opvp1 == '1':
+               opvp2 = input('Qual usuario deseja visualizar?')
+               if opvp2 in estoque:
+                    visualiza_usuario(opvp2)
+               else:
+                   opu = input('Usuario não cadastrado, deseja cadastra-lo?').upper()
+                   if opu == 'S':
+                       cadastra_usuario()
+
+           if opvp1 == '2':
+               for u in func:
+                   print(u.__dict__)
+#------------------------------------------------------------------------------------------------------
+       elif r == '9':
+           opvc1 = input('\n [1]-Mostrar cliente especifico'
+                         '\n [2]-Mostrar Todos os cliente')
+           if opvc1 == '1':
+               opvc2 = input('Qual cliente deseja visualizar?')
+               if opvc2 in c_cadastrados:
+                   visualiza_cliente(opvc2)
+               else:
+                   opc = input('cliente não cadastrado, deseja cadastra-lo?').upper()
+                   if opc == 'S':
+                       cadastra_cliente()
+           if opvc1 == '2':
+               for c in c_cadastrados:
+                   print(c.__dict__)
 #--------------------------------------------------------------------------------------------------------------------
-   elif r == '10':
-       delete_produto(estoque)
-       exit()
-   elif r == '11':
-       delete_usuario(func)
-       exit()
-   elif r == '12':
-       delete_cliente(c_cadastrados)
-       exit()
+       elif r == '10':
+           delete_produto(estoque)
+#-------------------------------------------------------------------------------------------------------------------------
+       elif r == '11':
+           delete_usuario(func)
+#------------------------------------------------------------------------------------------------------------------
+       elif r == '12':
+           delete_cliente(c_cadastrados)
+#------------------------------------------------------------------------------------------------------------------------------
+       elif r =='sair':
+           break
