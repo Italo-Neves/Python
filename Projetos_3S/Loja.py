@@ -505,13 +505,22 @@ if __name__ == '__main__':
    while True:
        r = menu()
        if r =='1':
-           estoque.append(cadastra_produto())
+           try:
+               estoque.append(cadastra_produto())
+           except:
+               print('Erro ao cadastrar, por favor tente mais tarde!')
 #------------------------------------------------------------------------------------------------------
        if r =='2':
-           func.append(cadastra_usuario())
+           try:
+               func.append(cadastra_usuario())
+           except:
+               print('Erro ao cadastrar, por favor tente mais tarde!')
 #------------------------------------------------------------------------------------------------------
        elif r == '3':
-           c_cadastrados.append(cadastra_cliente())
+           try:
+               c_cadastrados.append(cadastra_cliente())
+           except:
+               print('Erro ao cadastrar, por favor tente mais tarde!')
 #------------------------------------------------------------------------------------------------------
        elif r == '4':
            opp = input('Qual produto deseja alterar?')
