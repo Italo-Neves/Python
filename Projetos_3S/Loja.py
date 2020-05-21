@@ -355,22 +355,22 @@ def altera_produto(c):
     op = input('Digite o número da operação')
     if op == '1':
        nnome = (input('Digite o novo nome'))
-       c.nome = nnome
+       c['_Produto__nome'] = nnome
     if op == '2':
        ncodigo = (input('Digite o preço'))
-       c.codigo = ncodigo
+       c['_Produto__codigo'] = ncodigo
     if op == '3':
        npreco = (input('Digite o codigo de barras'))
-       c.preco = npreco
+       c['_Produto__preco'] = npreco
     if op == '4':
        ndescricao = (input('Digite a nova descrição'))
-       c.descricao = ndescricao
+       c['_Produto__descricao'] = ndescricao
     if op == '5':
        npcusto = (input('Digite o novo preço de fabrica'))
-       c.pcusto = npcusto
+       c['_Produto__pcusto'] = npcusto
     if op == '6':
        nimposto = (input('Digite a nova porcentagem de impostos'))
-       c.imposto = nimposto
+       c['_Produto__imposto']= nimposto
 
 def cadastra_usuario():
     su = input('\n 1 - Gerente'
@@ -447,16 +447,16 @@ def altera_cliente(c):
     op = input('Digite o número da operação')
     if op == '1':
        nnome = (input('Digite o novo nome'))
-       c.nome = nnome
+       c['_Pessoa__nome'] = nnome
     if op == '2':
        nsobrenome = (input('Digite o novo sobrenome'))
-       c.sobrenome = nsobrenome
+       c['_Pessoa__sobrenome'] = nsobrenome
     if op == '3':
        nemail = (input('Digite o novo e-mail'))
-       c.email = nemail
+       c['_Pessoa__email'] = nemail
     if op == '4':
        ncpf = (input('Digite o novo CPF'))
-       c.cpf = ncpf
+       c['_Pessoa__cpf'] = ncpf
 
 def visualiza_usuario(user):
     Usuario.mostra_usuario(user)
@@ -504,7 +504,8 @@ if __name__ == '__main__':
    estoque = [p1.__dict__, p2.__dict__, p3.__dict__, p4.__dict__, p5.__dict__, p6.__dict__]
    func = [f1.__dict__, g1.__dict__]
    c_cadastrados = [c1.__dict__]
-#-------------------------------------------------------Menu--------------------------------------------------------
+
+# #-------------------------------------------------------Menu--------------------------------------------------------
    while True:
        r = menu()
        if r == '1':
@@ -526,13 +527,27 @@ if __name__ == '__main__':
                print('Erro ao cadastrar, por favor tente mais tarde!')
 #------------------------------------------------------------------------------------------------------
        elif r == '4':
-           opp = input('Qual produto deseja alterar?')
-           if opp in estoque:
-                altera_produto(opp)
-           else:
-               opp = input('Produto não cadastrado, deseja cadastra-lo?').upper()
-               if opp == 'S':
-                   cadastra_produto()
+           continua = True
+           while continua:
+               c = 0
+               opcao = input('Digite o nome do produto')
+               for i in estoque:
+                   if estoque[c]['_Produto__nome'] == opcao:
+                       altera_produto(i)
+                       print(i)
+                       continua = input('Deseja continuar?').upper()
+                       if continua == 'S':
+                           continua = True
+                       else:
+                           continua = False
+                   else:
+                       c += 1
+                       if c > len(estoque):
+                           break
+                   if i not in estoque:
+                       opp = input('Produto não cadastrado, deseja cadastra-lo?').upper()
+                       if opp == 'S':
+                           cadastra_produto()
 #------------------------------------------------------------------------------------------------------
        elif r == '5':
            opau = input('Qual usuario deseja alterar?')
@@ -544,21 +559,37 @@ if __name__ == '__main__':
                    cadastra_usuario()
 #------------------------------------------------------------------------------------------------------
        elif r == '6':
-           opac = input('Qual cliente deseja alterar?')
-           if opac in estoque:
-               altera_cliente(opac)
-           else:
-               opc =input('cliente não cadastrado, deseja cadastra-lo?').upper()
-               if opc == 'S':
-                   cadastra_cliente()
+           continua = True
+           while continua:
+               c = 0
+               opcao = input('Digite o nome do Cliente')
+               for i in c_cadastrados:
+                   if c_cadastrados[c]['_Pessoa__nome'] == opcao:
+                       altera_cliente(i)
+                       print(i)
+                       continua = input('Deseja continuar?').upper()
+                       if continua == 'S':
+                           continua = True
+                       else:
+                           continua = False
+                   else:
+                       c += 1
+                       if c > len(c_cadastrados):
+                           break
+                   if i not in c_cadastrados:
+                       opp = input('Cliente não cadastrado, deseja cadastra-lo?').upper()
+                       if opp == 'S':
+                           cadastra_cliente()
 #------------------------------------------------------------------------------------------------------
        elif r == '7':
            opvp1 = input('\n [1]-Mostrar produto especifico'
                          '\n [2]-Mostrar Todos os produtos')
            if opvp1 == '1':
-               opvp2 = input('Qual produto deseja visualizar?')
-               if opvp2 in estoque:
-                    altera_produto(opvp2)
+               opcao = input('Digite o nome do Cliente')
+               c = 0
+               for i in estoque:
+                   if estoque[c]['_Pessoa__nome'] == opcao:
+                       print(i.__dict__)
                else:
                    opp = input('Produto não cadastrado, deseja cadastra-lo?').upper()
                    if opp == 'S':
@@ -587,10 +618,11 @@ if __name__ == '__main__':
            opvc1 = input('\n [1]-Mostrar cliente especifico'
                          '\n [2]-Mostrar Todos os cliente')
            if opvc1 == '1':
-               opvc2 = input('Qual cliente deseja visualizar?')
-               if opvc2 in c_cadastrados:
-                   visualiza_cliente(opvc2)
-               else:
+               opcao = input('Digite o nome do Cliente')
+               c = 0
+               for i in estoque:
+                   if estoque[c]['_Pessoa__nome'] == opcao:
+                       print(i.__dict__)
                    opc = input('Cliente não cadastrado, deseja cadastra-lo?').upper()
                    if opc == 'S':
                        cadastra_cliente()
