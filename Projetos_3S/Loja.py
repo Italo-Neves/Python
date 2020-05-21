@@ -585,15 +585,19 @@ if __name__ == '__main__':
            opvp1 = input('\n [1]-Mostrar produto especifico'
                          '\n [2]-Mostrar Todos os produtos')
            if opvp1 == '1':
-               opcao = input('Digite o nome do Cliente')
-               c = 0
-               for i in estoque:
-                   if estoque[c]['_Pessoa__nome'] == opcao:
-                       print(i.__dict__)
-               else:
-                   opp = input('Produto não cadastrado, deseja cadastra-lo?').upper()
-                   if opp == 'S':
-                       cadastra_produto()
+               continua = True
+               while continua:
+                   c = 0
+                   opcao = input('Digite o nome do produto')
+                   for i in estoque:
+                       if estoque[c]['_Produto__nome'] == opcao:
+                           print(estoque[c])
+                           continua = False
+                           break
+                       else:
+                           c += 1
+                           if c > len(estoque):
+                               break
            if opvp1 == '2':
                for p in estoque:
                    print(p)
