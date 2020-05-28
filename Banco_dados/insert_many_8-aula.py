@@ -11,6 +11,7 @@ def qtd_registro():
 # Inserir vários usando lista
 conexao=sqlite3.connect('livraria.db') # Conexão com a base de dados livraria.db
 cur=conexao.cursor()
+print("QTd Registros = ",qtd_registro())
 sql="insert into tb_cliente(cpf, nome, idade) values(?,?,?)"
 lista_cliente=[
     ('123', 'Paulo', 31),

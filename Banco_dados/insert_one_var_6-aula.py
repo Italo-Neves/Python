@@ -13,14 +13,15 @@ def qtd_registro():
 
 conexao=sqlite3.connect('livraria.db') # Conexão com a base de dados livraria.db
 cur=conexao.cursor()
+print("Qtd =",qtd_registro())
 sql="insert into tb_cliente(cpf, nome, idade) values(?,?,?)"
-
-cpf1 = input('CPF; ')                 # cpf1 = '423'
+cpf1 = input('CPF; ')             # cpf1 = '423'
 nome1 = input('Nome: ')           # nome1 = 'Ana'
 idade1 = int(input('Idade: '))    # idade1 = 23
 cur.execute(sql, (cpf1, nome1, idade1))
 conexao.commit()
 print ("one record added successfully")
-print("Qtd = ", qtd_registro())
+v=qtd_registro()
+print("Qtd = ", v)
 cur.close()
 conexao.close()
