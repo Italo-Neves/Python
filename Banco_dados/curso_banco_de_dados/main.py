@@ -24,10 +24,17 @@ class AgendaDB:
         self.cursor.execute('SELECT * FROM agenda')
         for linha in self.cursor.fetchall():
             print(linha)
+    def buscar(self, valor):
+        consulta ='SELECT * FROM agenda WHERE nome LIKE ?'
+        self.cursor.execute(consulta,(f'%{valor}%',))
+        for  linha in self.cursor.fetchall():
+            print(linha)
+
     def fechar(self):
         self.cursor.close()
         self.conn.close()
 if __name__ == '__main__':
     agenda = AgendaDB('agenda.db')
-    agenda.listar()
+    agenda.buscar('Julia')
+
 
