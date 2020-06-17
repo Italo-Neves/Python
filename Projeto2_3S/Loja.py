@@ -352,34 +352,51 @@ def cadastra_produto():
             conexao.commit()
 
 
-def altera_produto(c):
+def altera_produto(codigo):
     print('\nO que deseja alterar?'
           '\n [1] - Atualizar nome'
           '\n [2] - Atualizar preço'
-          '\n [3] - Atualizar código de barras'
-          '\n [4] - Atualizar descrição'
-          '\n [5] - Atualizar valor de fábrica'
-          '\n [6] - Atualizar impostos')
+          '\n [3] - Atualizar descrição'
+          '\n [4] - Atualizar valor de fábrica'
+          '\n [5] - Atualizar impostos')
     op = input('\nDigite o número da operação: ')
     if op == '1':
-       nnome = (input('\nDigite o novo nome: '))
-       c['_Produto__nome'] = nnome
-    if op == '2':
-       npreco = (input('\nDigite o novo preço: R$ '))
-       c['_Produto__preco'] = npreco
-    if op == '3':
-       ncodigo = (input('\nDigite o novo código de barras: '))
-       c['_Produto__codigo'] = ncodigo
-    if op == '4':
-       ndescricao = (input('\nDigite a nova descrição: '))
-       c['_Produto__descricao'] = ndescricao
-    if op == '5':
-       npcusto = (input('\nDigite o novo preço de fábrica: R$ '))
-       c['_Produto__pcusto'] = npcusto
-    if op == '6':
-       nimposto = (input('\nDigite a nova porcentagem de impostos: '))
-       c['_Produto__imposto']= nimposto
+        nome = input('Digite o novo nome')
+        with conecta() as conexao:
+            with conexao.cursor() as cursor:
+                sql = 'UPDATE TB_produtos SET nome=%s WHERE PK_codigo=%s'
+                cursor.execute(sql, (nome ,codigo))
+                conexao.commit()
 
+    if op == '2':
+        preco = input(float('Digite o novo preço'))
+        with conecta() as conexao:
+            with conexao.cursor() as cursor:
+                sql = 'UPDATE TB_produtos SET pvenda=%s WHERE PK_codigo=%s'
+                cursor.execute(sql, (preco ,codigo))
+                conexao.commit()
+
+    if op == '3':
+        descricao = input('Digite a nova descrição')
+        with conecta() as conexao:
+            with conexao.cursor() as cursor:
+                sql = 'UPDATE TB_produtos SET descricao=%s WHERE PK_codigo=%s'
+                cursor.execute(sql, (descricao ,codigo))
+                conexao.commit()
+    if op == '4':
+        pcusto = input('Digite o novo preço de fábrica')
+        with conecta() as conexao:
+            with conexao.cursor() as cursor:
+                sql = 'UPDATE TB_produtos SET pcusto=%s WHERE PK_codigo=%s'
+                cursor.execute(sql, (pcusto ,codigo))
+                conexao.commit()
+    if op == '5':
+        imposto = input('Digite a nova taxa de imposto')
+        with conecta() as conexao:
+            with conexao.cursor() as cursor:
+                sql = 'UPDATE TB_produtos SET imposto=%s WHERE PK_codigo=%s'
+                cursor.execute(sql, (imposto ,codigo))
+                conexao.commit()
 def cadastra_usuario():
     su = input('\n [1] - Gerente'
                '\n [2] - Funcionário'
@@ -470,7 +487,7 @@ def altera_cliente(c):
 def visualiza_usuario(user):
     Usuario.mostra_usuario(user)
 
-def visualiza_produto(produto):
+def visualiza_produto():
     with conecta() as conexao:  # gerenciador de contexto que está fechando a conexão
         with conexao.cursor() as cursor:  # gerenciador de contexto que está fechando o cursor
             cursor.execute('SELECT * FROM TB_produto LIMIT 100')  # é uma boa pratica limitar as pesquisas
@@ -494,11 +511,13 @@ def delete_cliente(c_cadastrados):
         c_cadastrados.pop(c)
         print(f'Cliente deletado!')
 
-def delete_produto(estoque):
-    item = input('\nQual produto será deletado? ')
-    if item in estoque:
-        estoque.pop(item)
-        print(f'Produto deletado!')
+def delete_produto(codigo):
+    with conecta() as conexao:
+        with conexao.cursor() as cursor:
+            sql = 'DELETE FROM TB_produtos WHERE codigo = %s'
+            cursor.execute(sql,(codigo,))
+            conexao.commit()
+
 
 if __name__ == '__main__':
 #---------------------------------------- PRODUTOS ---------------------------------------------------------------------
@@ -524,7 +543,7 @@ if __name__ == '__main__':
        r = menu()
        if r == '1':
            try:
-               estoque.append(cadastra_produto())
+               cadastra_produto()
            except:
                print('Erro ao cadastrar, por favor tente mais tarde!')
 #-----------------------------------------------------------------------------------------------------------------------
@@ -618,8 +637,7 @@ if __name__ == '__main__':
                            if c > len(estoque):
                                break
            if opvp1 == '2':
-               for p in estoque:
-                   print(p)
+               visualiza_produto()
 #-----------------------------------------------------------------------------------------------------------------------
        elif r == '8':
            opvp1 = input('\n [1]-Mostrar usuário especifico'
@@ -666,11 +684,11 @@ if __name__ == '__main__':
                        cadastra_cliente()
                        break
            if opvc1 == '2':
-               for c in c_cadastrados:
-                   print(c)
+               pass
 #-----------------------------------------------------------------------------------------------------------------------
        elif r == '10':
-           delete_produto(estoque)
+           p = input (int('Digite o código do produto a ser excluido'))
+           delete_produto(p)
 #-----------------------------------------------------------------------------------------------------------------------
        elif r == '11':
            delete_usuario(func)
