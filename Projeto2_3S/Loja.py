@@ -344,9 +344,13 @@ def cadastra_produto():
     imposto = int(input('Porcentagem de impostos: '))
 
     p = Produto(nome, preco, codigo, descricao, pcusto, imposto)
-    print(f'\nO produto {p.nome} foi cadastrado com sucesso!\n')
-    print(p.__dict__)
-    return p.__dict__
+
+    with conecta() as conexao:
+        with conexao.cursor() as cursor:
+            sql = 'INSERT INTO TB_produto (PK_codigo, nome, descricao, pcusto, pvenda, imposto) VALUES (%s, %s, %s, %s, %s, %s)'
+            cursor.execute(sql, (nome, descricao, pcusto, preco, imposto))
+            conexao.commit()
+
 
 def altera_produto(c):
     print('\nO que deseja alterar?'
@@ -467,7 +471,13 @@ def visualiza_usuario(user):
     Usuario.mostra_usuario(user)
 
 def visualiza_produto(produto):
-    Produto.mostra_produto(produto)
+    with conecta() as conexao:  # gerenciador de contexto que está fechando a conexão
+        with conexao.cursor() as cursor:  # gerenciador de contexto que está fechando o cursor
+            cursor.execute('SELECT * FROM TB_produto LIMIT 100')  # é uma boa pratica limitar as pesquisas
+            resultado = cursor.fetchall()
+
+            for linha in resultado:
+                print(linha)
 
 def visualiza_cliente(user):
     Cliente.mostra_cliente(user)
