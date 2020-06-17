@@ -1,4 +1,6 @@
 from passlib.hash import pbkdf2_sha256 as cryp
+import pymysql.cursors
+from contextlib import contextmanager
 #---------------------------------------- PESSOA -----------------------------------------------------------------------
 class Pessoa:
     def __init__(self, nome, sobrenome, email, cpf):
@@ -301,6 +303,21 @@ class Produto:
               f'\nPorcentagem de impostos: {self.imposto}%')
 
 #---------------------------------------- CRUD -------------------------------------------------------------------------
+@contextmanager
+def conecta():
+    conexao = pymysql.connect(
+        host='localhost',
+        user='Magnavox',
+        password='testador',
+        db='Eletronica',
+        charset='utf8',
+    )
+    try:
+        yield conexao  # funciona como um return mas só pode ser usado em uma função
+    finally:
+        print('Conexão fechada')
+        conexao.close()
+        
 def menu():
     print(f'\nO deseja fazer?\n'
         f'\n1 - Cadastrar produto'
