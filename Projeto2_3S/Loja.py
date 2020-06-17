@@ -343,12 +343,10 @@ def cadastra_produto():
     pcusto = int(input('Valor de fábrica: R$ '))
     imposto = int(input('Porcentagem de impostos: '))
 
-    p = Produto(nome, preco, codigo, descricao, pcusto, imposto)
-
     with conecta() as conexao:
         with conexao.cursor() as cursor:
             sql = 'INSERT INTO TB_produto (PK_codigo, nome, descricao, pcusto, pvenda, imposto) VALUES (%s, %s, %s, %s, %s, %s)'
-            cursor.execute(sql, (nome, descricao, pcusto, preco, imposto))
+            cursor.execute(sql, (codigo,nome, descricao, pcusto, preco, imposto))
             conexao.commit()
 
 
@@ -514,7 +512,7 @@ def delete_cliente(c_cadastrados):
 def delete_produto(codigo):
     with conecta() as conexao:
         with conexao.cursor() as cursor:
-            sql = 'DELETE FROM TB_produtos WHERE codigo = %s'
+            sql = 'DELETE FROM TB_produtos WHERE PK_codigo = %s'
             cursor.execute(sql,(codigo,))
             conexao.commit()
 
@@ -560,30 +558,8 @@ if __name__ == '__main__':
                print('Erro ao cadastrar, por favor tente mais tarde!')
 #-----------------------------------------------------------------------------------------------------------------------
        elif r == '4':
-           continua = True
-           while continua:
-               c = 0
-               opcao = input('Digite o nome do produto: ')
-               for i in estoque:
-                   if estoque[c]['_Produto__nome'] == opcao:
-                       print('\n', i)
-                       altera_produto(i)
-                       print(i)
-                       continua = input('\nDeseja continuar? ').upper()
-                       if continua == 'S':
-                           continua = True
-                           break
-                       else:
-                           continua = False
-                           break
-                   else:
-                       c += 1
-                       if c > len(estoque):
-                           break
-                   if i not in estoque:
-                       opp = input('Produto não cadastrado, deseja cadastra-lo? ').upper()
-                       if opp == 'S':
-                           cadastra_produto()
+            c = input(int('Digite o código do produto que dejesa altearar'))
+            altera_produto(c)
 #-----------------------------------------------------------------------------------------------------------------------
        elif r == '5':
            opau = input('\nQual usuário deseja alterar? ')
