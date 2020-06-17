@@ -1,7 +1,7 @@
 from passlib.hash import pbkdf2_sha256 as cryp
 import pymysql.cursors
 from contextlib import contextmanager
-#---------------------------------------- PESSOA -----------------------------------------------------------------------
+#---------------------------------------------------- PESSOA -----------------------------------------------------------------------
 class Pessoa:
     def __init__(self, nome, sobrenome, email, cpf):
         self.__nome = nome
@@ -317,7 +317,7 @@ def conecta():
     finally:
         print('Conexão fechada')
         conexao.close()
-        
+
 def menu():
     print(f'\nO deseja fazer?\n'
         f'\n1 - Cadastrar produto'
