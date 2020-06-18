@@ -303,6 +303,7 @@ class Produto:
               f'\nPorcentagem de impostos: {self.imposto}%')
 
 #---------------------------------------- CRUD -------------------------------------------------------------------------
+
 @contextmanager
 def conecta():
     conexao = pymysql.connect(
@@ -349,7 +350,6 @@ def cadastra_produto():
             cursor.execute(sql, (codigo,nome, descricao, pcusto, preco, imposto))
             conexao.commit()
 
-
 def altera_produto(codigo):
     print('\nO que deseja alterar?'
           '\n [1] - Atualizar nome'
@@ -395,6 +395,7 @@ def altera_produto(codigo):
                 sql = 'UPDATE TB_produtos SET imposto=%s WHERE PK_codigo=%s'
                 cursor.execute(sql, (imposto ,codigo))
                 conexao.commit()
+
 def cadastra_usuario():
     su = input('\n [1] - Gerente'
                '\n [2] - Funcionário'
@@ -515,6 +516,7 @@ def delete_produto(codigo):
             sql = 'DELETE FROM TB_produtos WHERE PK_codigo = %s'
             cursor.execute(sql,(codigo,))
             conexao.commit()
+
 
 
 if __name__ == '__main__':
