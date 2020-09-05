@@ -1,5 +1,5 @@
 #!/usr/bin/python3.7
-
+#prototipo
 import os
 def discover(initial_path):
     extensions =[#'exe,', 'dll', 'so', 'rpm', 'deb', 'vmlinuz', 'img' Arquivos do Sitema
