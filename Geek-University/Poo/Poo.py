@@ -4,7 +4,7 @@ Programação Orientada a objeto - POO
 - POO é um modelo de paradgma de programação que utiliza mapeamento
 de objetos do mundo real para modelos computaconais.
 
-- Paradgma de programação é a forma/metodologia utilizada para
+- Paradigma de programação é a forma/metodologia utilizada para
 pensar/desenvolver sistemas.
 
 Principais elementos da orientação a orientação a objetos.
