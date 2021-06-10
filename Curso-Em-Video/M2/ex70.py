@@ -1,21 +1,22 @@
-# -*- coding: utf-8 -*-
-print('Loja super baratão!')
-barato = 9999
-pbarato =' '
-total = 0
-m1k = 0
+total = totmil = menor = cont = 0
 while True:
-    nome = str(input('Digite o nome do produto: ')).upper()
-    preco = float(input('Digite o valor do produto: '))
-    op = str(input('Deseja continuar? [S/N] ')).upper()
+    produto = str(input('Nome do produto: '))
+    preco = float(input('Preço: R$'))
+    cont += 1
     total += preco
-    if preco >1000:
-        m1k += 1
-    if preco < barato:
-        barato = preco
-        pbarato = nome
-    if op =='N':
-        print(f'\n O total da compra foi: R${total}'
-              f'\n Temos {m1k} produto que custa mais de R$1000,00'
-              f'\n O produto mais barato foi {pbarato} custando {barato}')
+    if preco > 1000:
+        totmil += 1
+    if cont == 1:
+        menor = preco
+    else:
+        if preco < menor:
+            menor = preco
+    resp = ' '
+    while resp not in 'SN':
+        resp = str(input('Quer continuar? [S/N]')).strip().upper()[0]
+    if resp =='N':
         break
+print('{:-^40}'.format('FIM DA EXECUÇÂO'))
+print(f'O Total da compra foi R${total:.2f}')
+print(f'Temos {totmil} produtos que custam mais de R$1000.00 ')
+print(f'O produto mais barato custa R${menor:.2f}')
